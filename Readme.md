@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Виктория Рагимова](https://up.htmlacademy.ru/javascript/25/user/428329).
-* Наставник: [Валерия Бильщук](https://htmlacademy.ru/profile/id1170129).
+* Наставник: [Лера Бильщук](https://htmlacademy.ru/profile/id1170129).
 
 ---
 
