@@ -51,7 +51,7 @@ const createCommentsList = function() {
   const commentsList = [];
   for (let i = 1; i <= getRandomNaturalNumber(1, 15); i++) {
     const newComment = {
-      id: i,
+      id: Date.now() + Math.random(),
       avatar: `img/avatar-${  getRandomNaturalNumber(1, 6)  }.svg`,
       message:  MESSAGES[getRandomIntegerPositiveNumber(0, MESSAGES.length-1)],
       name: NAMES[getRandomIntegerPositiveNumber(0, NAMES.length-1)],
