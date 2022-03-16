@@ -1,3 +1,3 @@
-import {photosDescriptionList} from './data.js';
+import './data.js';
+import './thumbnail.js';
 
-photosDescriptionList();
