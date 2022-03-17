@@ -23,8 +23,8 @@ const NAMES = [
   'Вашингтон',
 ];
 
-const createCommentsList = function() {
-  const commentsList = [];
+const createComments = function() {
+  const comments = [];
   for (let i = 1; i <= getRandomNaturalNumber(1, 15); i++) {
     const newComment = {
       id: Date.now() + Math.random(),
@@ -32,23 +32,23 @@ const createCommentsList = function() {
       message:  MESSAGES[getRandomIntegerPositiveNumber(0, MESSAGES.length-1)],
       name: NAMES[getRandomIntegerPositiveNumber(0, NAMES.length-1)],
     };
-    commentsList.push(newComment);
+    comments.push(newComment);
   }
-  return commentsList;
+  return comments;
 };
 
-const createPhotoDescription = function (i=1) {
+const createPhotoDescription = function (value, i) {
   const newPhotoDescription = {
-    id: i,
-    url: `photos/${  i  }.jpg`,
+    id: i + 1,
+    url: `photos/${  i + 1  }.jpg`,
     description: DESCRIPTIONS[getRandomIntegerPositiveNumber(0, DESCRIPTIONS.length-1)],
     likes: getRandomNaturalNumber(15, 200),
-    comments: createCommentsList(),
+    comments: createComments(),
   };
   i += 1;
   return newPhotoDescription;
 };
 
-const photosDescriptionList = Array.from({length: 25}, createPhotoDescription);
+const photoDescriptions = () => Array.from({length: 25}, createPhotoDescription);
 
-export {photosDescriptionList};
+export {photoDescriptions};
