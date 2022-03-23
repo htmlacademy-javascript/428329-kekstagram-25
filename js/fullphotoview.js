@@ -1,4 +1,31 @@
-import {isEscapeKey, isEnterKey} from './util.js';
+const fullPhotoOpen = document.querySelector('.big-picture');
+const fullPhotoClose = document.querySelector('.big-picture__cancel');
+const modalOpen = document.querySelector('body');
+const socialCommentCount = document.querySelector('.social__comment-count');
+const socialCommentsLoader = document.querySelector('.comments-loader');
+
+const viewFullPhoto = function () {
+  fullPhotoOpen.classList.remove('hidden');
+  modalOpen.classList.add('modal-open');
+  socialCommentCount.classList.add('hidden');
+  socialCommentsLoader.classList.add('hidden');
+};
+
+const closeFullPhoto = function () {
+  fullPhotoOpen.classList.add('hidden');
+  modalOpen.classList.remove('modal-open');
+  socialCommentCount.classList.remove('hidden');
+  socialCommentsLoader.classList.remove('hidden');
+};
+
+
+fullPhotoClose.addEventListener('click', () => {
+  closeFullPhoto();
+});
+
+export {viewFullPhoto, closeFullPhoto};
+
+/*import {isEscapeKey, isEnterKey} from './util.js';
 
 const fullPhotoImg = document.querySelector('.big-picture__img').querySelector('img');
 const fullPhotoLikesCount = document.querySelector('.likes-count');
@@ -53,4 +80,4 @@ fullPhotoCloseElement.addEventListener('click', () => {
   closeFullPhoto();
 });
 
-export {viewPostDialog};
+export {viewPostDialog};*/
