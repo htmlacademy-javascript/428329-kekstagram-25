@@ -25,4 +25,29 @@ const getRandomArrayElement = (elements) => elements[getRandomIntegerPositiveNum
 const isEscapeKey = (evt) => evt.key === 'Escape';
 const isEnterKey = (evt) => evt.key === 'Enter';
 
-export {getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
+const removeAllChildren = function(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+};
+
+const addComment = function(userComment) {
+  const newComment = document.createElement('li');
+  newComment.classList.add('social__comment');
+  const commentImg = document.createElement('img');
+  commentImg.classList.add('social__picture');
+  commentImg.src = userComment.avatar;
+  commentImg.alt = userComment.name;
+  commentImg.width = 35;
+  commentImg.height = 35;
+  const commentText = document.createElement('p');
+  commentText.classList.add('social__text');
+  commentText.textContent = userComment.message;
+  newComment.appendChild(commentImg);
+  newComment.appendChild(commentText);
+
+  return newComment;
+};
+
+
+export {addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};

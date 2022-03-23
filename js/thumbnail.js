@@ -1,4 +1,4 @@
-import {isEnterKey, isEscapeKey} from './util.js';
+import {addComment, removeAllChildren, isEnterKey, isEscapeKey} from './util.js';
 import {createPhotoDescriptions} from './data.js';
 import {viewFullPhoto, closeFullPhoto} from './fullphotoview.js';
 
@@ -8,6 +8,8 @@ const pictureThumbnailTemplate = document.querySelector('#picture').content.quer
 const fullPhotoImg = document.querySelector('.big-picture__img').querySelector('img');
 const fullPhotoLikesCount = document.querySelector('.likes-count');
 const fullPhotoCommentsCount = document.querySelector('.comments-count');
+const fullPhotoDescription = document.querySelector('.social__caption');
+const fullPhotoClose = document.querySelector('.big-picture__cancel');
 
 const pictureThumbnails = createPhotoDescriptions();
 
@@ -22,16 +24,26 @@ pictureThumbnails.forEach(({url, likes, comments, description}) => {
 
   pictureThumbnail.addEventListener('click', () => {
     viewFullPhoto();
-    fullPhotoImg.src =  pictureThumbnail.querySelector('.picture__img').src;
-    fullPhotoLikesCount.textContent =  pictureThumbnail.querySelector('.picture__likes').textContent;
-    fullPhotoCommentsCount.textContent =  pictureThumbnail.querySelector('.picture__comments').textContent;
-    document.querySelector('.social__caption').textContent = description;
+    fullPhotoImg.src = url;
+    fullPhotoLikesCount.textContent = likes;
+    fullPhotoCommentsCount.textContent = comments.length;
+    fullPhotoDescription.textContent = description;
+
+    const commentsList = document.querySelector('.social__comments');
+    removeAllChildren(commentsList);
+    for (let i = 0; i < comments.length; i++) {
+      commentsList.appendChild(addComment(comments[i]));
+    }
 
     document.addEventListener('keydown', (evt) => {
       if (isEscapeKey(evt)) {
         evt.preventDefault();
         closeFullPhoto();
       }
+    });
+
+    fullPhotoClose.addEventListener('click', () => {
+      closeFullPhoto();
     });
   });
 
