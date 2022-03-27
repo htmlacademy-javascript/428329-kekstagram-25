@@ -23,7 +23,7 @@ const NAMES = [
   'Вашингтон',
 ];
 
-const createComments = function() {
+const createComments = () => {
   const comments = [];
   for (let i = 1; i <= getRandomNaturalNumber(1, 15); i++) {
     const newComment = {
@@ -37,7 +37,7 @@ const createComments = function() {
   return comments;
 };
 
-const createPhotoDescription = function (value, i) {
+const createPhotoDescription = (value, i) => {
   const newPhotoDescription = {
     id: i + 1,
     url: `photos/${  i + 1  }.jpg`,
