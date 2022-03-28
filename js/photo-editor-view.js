@@ -44,3 +44,5 @@ uploadFile.addEventListener('input', () => {
     closePhotoEditor();
   });
 });
+
+
