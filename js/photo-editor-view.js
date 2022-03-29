@@ -4,6 +4,15 @@ const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 const uploadCancelButton = document.querySelector('#upload-cancel');
+const hashtagInput = document.querySelector('.text__hashtags');
+const descriptionInput = document.querySelector('.text__description');
+
+const onInputBlur = (evt) => {
+  if (evt === document.activeElement) {
+    return false;
+  }
+  return true;
+};
 
 const openPhotoEditor = () => {
   imgUploadOverlay.classList.remove('hidden');
@@ -24,11 +33,13 @@ const onButtonClose = () => {
 };
 
 function closePhotoEditor () {
-  imgUploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  if (onInputBlur(descriptionInput) && onInputBlur(hashtagInput)) {
+    imgUploadOverlay.classList.add('hidden');
+    body.classList.remove('modal-open');
 
-  document.removeEventListener('keydown', onEditorEscKeydown);
-  document.removeEventListener('click', onButtonClose);
+    document.removeEventListener('keydown', onEditorEscKeydown);
+    document.removeEventListener('click', onButtonClose);
+  }
 }
 
 uploadFile.addEventListener('input', () => {
@@ -44,5 +55,3 @@ uploadFile.addEventListener('input', () => {
     closePhotoEditor();
   });
 });
-
-
