@@ -1,9 +1,12 @@
 import {addComment, removeAllChildren, isEscapeKey} from './util.js';
 
+const MAX_COMMENTS_COUNT = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const socialCommentsLoader = document.querySelector('.comments-loader');
+const commentsCountView = document.querySelector('.comments-count-view');
 
 const fullPhotoImg = document.querySelector('.big-picture__img').querySelector('img');
 const fullPhotoLikesCount = document.querySelector('.likes-count');
@@ -15,8 +18,8 @@ const fullPhotoCommentsList = document.querySelector('.social__comments');
 const openFullPhoto = () => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  socialCommentCount.classList.add('hidden');
-  socialCommentsLoader.classList.add('hidden');
+  //socialCommentCount.classList.add('hidden');
+  //socialCommentsLoader.classList.add('hidden');
 };
 
 const onFullPhotoEscKeydown = (evt) => {
@@ -51,9 +54,35 @@ const createBigPhoto = (photo) => {
   fullPhotoCommentsCount.textContent = comments.length;
   fullPhotoDescription.textContent = description;
 
-  removeAllChildren(fullPhotoCommentsList);
-  for (let i = 0; i < comments.length; i++) {
-    fullPhotoCommentsList.appendChild(addComment(comments[i]));
+  const createCommentsList = (last) => {
+    removeAllChildren(fullPhotoCommentsList);
+    for (let i = 0; i < last; i++) {
+      fullPhotoCommentsList.appendChild(addComment(comments[i]));
+    }
+  };
+
+  if (comments.length <= MAX_COMMENTS_COUNT) {
+    commentsCountView.textContent = comments.length;
+    createCommentsList(comments.length);
+    socialCommentsLoader.classList.add('hidden');
+  } else {
+
+    let lastCommentIndex = MAX_COMMENTS_COUNT;
+    commentsCountView.textContent = lastCommentIndex;
+    createCommentsList(lastCommentIndex);
+    socialCommentsLoader.addEventListener('click', () => {
+      lastCommentIndex = lastCommentIndex + MAX_COMMENTS_COUNT;
+      if (lastCommentIndex >= comments.length) {
+        commentsCountView.textContent = comments.length;
+        createCommentsList(comments.length);
+        socialCommentsLoader.classList.add('hidden');
+
+      } else {
+        commentsCountView.textContent = lastCommentIndex;
+        createCommentsList(lastCommentIndex);
+      }
+    });
+
   }
 
   document.addEventListener('keydown', (evt) => {
