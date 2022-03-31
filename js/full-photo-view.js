@@ -45,6 +45,7 @@ function closeFullPhoto () {
 const createBigPhoto = (photo) => {
   const {url, likes, comments, description} = photo;
   openFullPhoto();
+
   fullPhotoImg.src = url;
   fullPhotoLikesCount.textContent = likes;
   fullPhotoCommentsCount.textContent = comments.length;
