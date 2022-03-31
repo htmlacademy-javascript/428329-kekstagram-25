@@ -366,6 +366,14 @@ main {
   outline: auto 5px highlight;
 }
 
+.img-upload__error {
+  position: absolute;
+
+  margin-left: 70px;
+
+  text-transform: none;
+  color: #ff0000;
+}
 
 /* Окно для редактирования изображения
    ========================================================================== */

@@ -62,8 +62,4 @@ function contains(arr, elem) {
   return false;
 }
 
-<<<<<<< HEAD
 export {contains, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
-=======
-export {contains, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
->>>>>>> f0abae6b5b35752f1cd267e723cf35e90a6b8f61
