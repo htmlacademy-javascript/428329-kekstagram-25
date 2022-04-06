@@ -15,6 +15,8 @@ const fullPhotoDescription = document.querySelector('.social__caption');
 const fullPhotoCloseButton = document.querySelector('.big-picture__cancel');
 const fullPhotoCommentsList = document.querySelector('.social__comments');
 
+let userComments;
+
 const openFullPhoto = () => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -33,9 +35,10 @@ const onButtonClose = () => {
   }
 };
 
-const onLoadMoreButton = (lastIndex, list) => {
+const onSocialCommentsLoaderClick = () => {
+  const lastCommentIndex = fullPhotoCommentsList.children.length + MAX_COMMENTS_COUNT;
   if (socialCommentsLoader) {
-    loadMoreButton(lastIndex, list);
+    loadMoreButton(lastCommentIndex, userComments);
   }
 };
 
@@ -47,7 +50,7 @@ function closeFullPhoto () {
 
   document.removeEventListener('keydown', onFullPhotoEscKeydown);
   document.removeEventListener('click', onButtonClose);
-  document.removeEventListener('click', onLoadMoreButton);
+  document.removeEventListener('click', onSocialCommentsLoaderClick);
 }
 
 const loadComments = (lastIndex, list) => {
@@ -68,32 +71,30 @@ function loadMoreButton (lastIndex, list) {
   }
 }
 
-const createCommentsList = (userCommentList) => {
-  if (userCommentList <= MAX_COMMENTS_COUNT) {
-    commentsCountView.textContent = userCommentList.length;
-    loadComments(userCommentList.length, userCommentList);
+const createCommentsList = () => {
+  if (userComments <= MAX_COMMENTS_COUNT) {
+    commentsCountView.textContent = userComments.length;
+    loadComments(userComments.length, userComments);
     socialCommentsLoader.classList.add('hidden');
   } else {
-    let lastCommentIndex = MAX_COMMENTS_COUNT;
+    const lastCommentIndex = MAX_COMMENTS_COUNT;
     commentsCountView.textContent = lastCommentIndex;
-    loadComments(lastCommentIndex, userCommentList);
-    socialCommentsLoader.addEventListener('click', () => {
-      lastCommentIndex = lastCommentIndex + MAX_COMMENTS_COUNT;
-      onLoadMoreButton(lastCommentIndex, userCommentList);
-    });
+    loadComments(lastCommentIndex, userComments);
+    socialCommentsLoader.addEventListener('click', onSocialCommentsLoaderClick);
   }
 };
 
 const createBigPhoto = (photo) => {
   const {url, likes, comments, description} = photo;
   openFullPhoto();
+  userComments = comments;
 
   fullPhotoImg.src = url;
   fullPhotoLikesCount.textContent = likes;
   fullPhotoCommentsCount.textContent = comments.length;
   fullPhotoDescription.textContent = description;
 
-  createCommentsList(comments);
+  createCommentsList();
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
