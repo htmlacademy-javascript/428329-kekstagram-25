@@ -25,7 +25,7 @@ const NAMES = [
 
 const createComments = () => {
   const comments = [];
-  for (let i = 1; i <= getRandomNaturalNumber(1, 15); i++) {
+  for (let i = 1; i <= getRandomNaturalNumber(10, 25); i++) {
     const newComment = {
       id: Date.now() + Math.random(),
       avatar: `img/avatar-${  getRandomNaturalNumber(1, 6)  }.svg`,
