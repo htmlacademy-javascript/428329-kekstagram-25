@@ -6,13 +6,13 @@ const imgUploadPreview = document.querySelector('.img-upload__preview').querySel
 
 let scaleValue = scaleControlValue.value.substring(0, scaleControlValue.value.length - 1);
 
-const onScaleControlSmaller = () => {
+const onScaleSmallerClick = () => {
   if (scaleControlSmaller) {
     makeScaleSmaller();
   }
 };
 
-const onScaleControlBigger = () => {
+const onScaleBiggerClick = () => {
   if (scaleControlBigger) {
     makeScaleBigger();
   }
@@ -39,4 +39,4 @@ function makeScaleBigger ()  {
   }
 }
 
-export {onScaleControlSmaller, onScaleControlBigger};
+export {onScaleSmallerClick, onScaleBiggerClick};

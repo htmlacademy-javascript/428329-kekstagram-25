@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {onScaleControlSmaller, onScaleControlBigger} from './photo-scale.js';
+import {onScaleSmallerClick, onScaleBiggerClick} from './photo-scale.js';
 
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -22,8 +22,8 @@ const openPhotoEditor = () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  scaleControlSmaller.addEventListener('click', onScaleControlSmaller);
-  scaleControlBigger.addEventListener('click', onScaleControlBigger);
+  scaleControlSmaller.addEventListener('click', onScaleSmallerClick);
+  scaleControlBigger.addEventListener('click', onScaleBiggerClick);
 };
 
 const onEditorEscKeydown = (evt) => {
@@ -47,8 +47,8 @@ function closePhotoEditor () {
     document.removeEventListener('keydown', onEditorEscKeydown);
     document.removeEventListener('click', onButtonClose);
 
-    document.removeEventListener('click', onScaleControlSmaller);
-    document.removeEventListener('click', onScaleControlBigger);
+    document.removeEventListener('click', onScaleSmallerClick);
+    document.removeEventListener('click', onScaleBiggerClick);
   }
 }
 

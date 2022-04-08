@@ -50,7 +50,8 @@ function closeFullPhoto () {
 
   document.removeEventListener('keydown', onFullPhotoEscKeydown);
   document.removeEventListener('click', onButtonClose);
-  document.removeEventListener('click', onSocialCommentsLoaderClick);
+  //document.removeEventListener('click', onSocialCommentsLoaderClick);
+  socialCommentsLoader.removeEventListener('click', onSocialCommentsLoaderClick);
 }
 
 const loadComments = (lastIndex, list) => {
