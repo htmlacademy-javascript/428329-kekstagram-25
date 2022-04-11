@@ -51,6 +51,8 @@ const addFilterStyle = (filterName, value) => {
     case PhotoEffect.HEAT:
       styleFilter = `brightness(${  value  })`;
       break;
+    default:
+      styleFilter = '';
   }
   imgUploadPreview.style.filter = styleFilter;
 };
@@ -141,7 +143,8 @@ const setEffect = (effectName) => {
       });
       break;
     default:
-      effectField.classList.add('hidden');
+      addFilterStyle();
+      filterSlider.classList.add('hidden');
   }
 };
 

@@ -48,8 +48,6 @@ const openPhotoEditor = () => {
   uploadCancelButton.addEventListener('click', onButtonClose);
 };
 
-uploadFile.addEventlistener('input', openPhotoEditor);
-
 function closePhotoEditor () {
   if (onInputBlur(descriptionInput) && onInputBlur(hashtagInput)) {
     imgUploadOverlay.classList.add('hidden');
@@ -66,3 +64,5 @@ function closePhotoEditor () {
     }
   }
 }
+
+uploadFile.addEventlistener('input', openPhotoEditor);
