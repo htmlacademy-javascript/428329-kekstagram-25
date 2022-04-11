@@ -20,7 +20,8 @@ pictureThumbnails.forEach((photo) => {
   thumbnailComments.textContent = comments.length;
   pictureListFragment.appendChild(pictureThumbnail);
 
-  pictureThumbnail.addEventListener('click', () => {
+  pictureThumbnail.addEventListener('click', (evt) => {
+    evt.preventDefault();
     createBigPhoto(photo);
   });
 });
