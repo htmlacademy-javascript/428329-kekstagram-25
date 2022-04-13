@@ -65,4 +65,4 @@ function closePhotoEditor () {
   }
 }
 
-uploadFile.addEventlistener('input', openPhotoEditor);
+uploadFile.addEventListener('input', openPhotoEditor);
