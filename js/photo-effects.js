@@ -63,6 +63,7 @@ const setEffect = (effectName) => {
     case PhotoEffect.CHROME:
       effectField.classList.remove('hidden');
       filterSlider.classList.remove('hidden');
+
       filterSlider.noUiSlider.updateOptions({
         range: {
           min: 0,
