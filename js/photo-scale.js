@@ -1,42 +1,42 @@
-const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-const scaleControlBigger = document.querySelector('.scale__control--bigger');
+const scaleSmallerControl = document.querySelector('.scale__control--smaller');
+const scaleBiggerControl = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 
 const imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
 
 let scaleValue = scaleControlValue.value.substring(0, scaleControlValue.value.length - 1);
 
-const onScaleSmallerClick = () => {
-  if (scaleControlSmaller) {
-    makeScaleSmaller();
-  }
-};
-
-const onScaleBiggerClick = () => {
-  if (scaleControlBigger) {
-    makeScaleBigger();
-  }
-};
-
 const addTransformStyle = (value) => {
   const styleTransform = `scale(${  value * 0.01  })`;
   imgUploadPreview.style.transform = styleTransform;
 };
 
-function makeScaleSmaller ()  {
+const makeScaleSmaller = () => {
   if (scaleValue >= 50) {
     scaleValue = scaleValue - 25;
     scaleControlValue.value = `${scaleValue  }%`;
     addTransformStyle(scaleValue);
   }
-}
+};
 
-function makeScaleBigger ()  {
+const makeScaleBigger = () => {
   if (scaleValue <= 75) {
     scaleValue = scaleValue + 25;
     scaleControlValue.value = `${scaleValue  }%`;
     addTransformStyle(scaleValue);
   }
-}
+};
+
+const onScaleSmallerClick = () => {
+  if (scaleSmallerControl) {
+    makeScaleSmaller();
+  }
+};
+
+const onScaleBiggerClick = () => {
+  if (scaleBiggerControl) {
+    makeScaleBigger();
+  }
+};
 
 export {onScaleSmallerClick, onScaleBiggerClick};
