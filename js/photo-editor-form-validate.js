@@ -1,4 +1,3 @@
-
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_HASHTAGS_AMOUNT = 5;
 const MAX_HASHTAGS_AMOUNT_TEXT = 'Максимальное количество хэштегов - 5';
@@ -9,7 +8,7 @@ const MAX_DESCRIPTION_LENGTH_TEXT = 'Длина комментария не до
 const uploadForm = document.querySelector('.img-upload__form');
 const userHashtagsInput = document.querySelector('.text__hashtags');
 const description = uploadForm.querySelector('.text__description');
-const submitButton = uploadForm.querySelector('.img-upload__submit');
+//const submitButton = uploadForm.querySelector('.img-upload__submit');
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
 const pristine = new Pristine (uploadForm, {
@@ -20,10 +19,10 @@ const pristine = new Pristine (uploadForm, {
 
 const validateDescription = (value) => {
   if (value.length > MAX_DESCRIPTION_LENGTH) {
-    submitButton.disabled = true;
+    //submitButton.disabled = true;
     return false;
   }
-  submitButton.disabled = false;
+  //submitButton.disabled = false;
   return true;
 };
 
@@ -37,7 +36,7 @@ const checkValue = (value) => {
   }
 
   if (hashtags.length > MAX_HASHTAGS_AMOUNT) {
-    submitButton.disabled = true;
+    //submitButton.disabled = true;
     return {
       isValid: false,
       errorText: MAX_HASHTAGS_AMOUNT_TEXT,
@@ -55,7 +54,7 @@ const checkValue = (value) => {
   });
 
   if (hashtags.length !== dublicates.length) {
-    submitButton.disabled = true;
+    //submitButton.disabled = true;
     return {
       isValid: false,
       errorText: RECURRING_HASHTAGS_ERROR_TEXT,
@@ -63,14 +62,14 @@ const checkValue = (value) => {
   }
 
   if (error) {
-    submitButton.disabled = true;
+    //submitButton.disabled = true;
     return {
       isValid: false,
       errorText: CORRECT_HASHTAG_ERROR_TEXT,
     };
   }
 
-  submitButton.disabled = false;
+  //submitButton.disabled = false;
 
   return {
     isValid: true,
@@ -93,3 +92,15 @@ const getTextError = (value) => {
 
 pristine.addValidator(description, validateDescription, MAX_DESCRIPTION_LENGTH_TEXT);
 pristine.addValidator(userHashtagsInput, validateHashtag, getTextError);
+
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    console.log('Можно отправлять');
+  } else {
+    console.log('Форма невалидна');
+  }
+});
+

@@ -63,7 +63,7 @@ const onSocialCommentsLoaderClick = () => {
 };
 
 const createCommentsList = () => {
-  if (userComments <= MAX_COMMENTS_COUNT) {
+  if (userComments.length <= MAX_COMMENTS_COUNT) {
     commentsCountView.textContent = userComments.length;
     loadComments(userComments.length, userComments);
     socialCommentsLoader.classList.add('hidden');
