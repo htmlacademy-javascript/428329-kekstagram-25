@@ -66,3 +66,4 @@ function closePhotoEditor () {
 }
 
 uploadFile.addEventListener('input', openPhotoEditor);
+export {closePhotoEditor};

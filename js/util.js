@@ -1,5 +1,10 @@
 const COMMENT_IMG_WIDTH = 35;
 const COMMENT_IMG_HEIGHT = 35;
+const ALERT_SHOW_TIME = 3000;
+
+const errorCode = document.querySelector('.error-message__title');
+const errorDescription = document.querySelector('.error-message__text');
+const errorWrapper = document.querySelector('.server-error');
 
 const getRandomNaturalNumber = (min, max) => {
   min = Math.ceil(min);
@@ -53,4 +58,20 @@ const addComment = (userComment) => {
   return newComment;
 };
 
-export {addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
+const showError = (value) => {
+  errorWrapper.classList.remove('hidden');
+  errorCode.textContent = 'Произошла ошибка!';
+  errorDescription.textContent = value;
+};
+
+const showAlert = (message) => {
+  errorWrapper.classList.remove('hidden');
+  errorCode.textContent = 'Упс!..';
+  errorDescription.textContent = message;
+
+  setTimeout(() => {
+    errorWrapper.classList.add('hidden');
+  }, ALERT_SHOW_TIME);
+};
+
+export {showAlert, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
