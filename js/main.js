@@ -10,3 +10,4 @@ import {showError} from './util.js';
 
 getData(createPhotoDescriptions, showError);
 
+

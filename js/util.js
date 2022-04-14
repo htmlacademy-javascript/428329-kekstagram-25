@@ -5,6 +5,7 @@ const ALERT_SHOW_TIME = 3000;
 const errorCode = document.querySelector('.error-message__title');
 const errorDescription = document.querySelector('.error-message__text');
 const errorWrapper = document.querySelector('.server-error');
+const imgFilters = document.querySelector('.img-filters');
 
 const getRandomNaturalNumber = (min, max) => {
   min = Math.ceil(min);
@@ -59,6 +60,7 @@ const addComment = (userComment) => {
 };
 
 const showError = (value) => {
+  imgFilters.classList.add('img-filters--inactive');
   errorWrapper.classList.remove('hidden');
   errorCode.textContent = 'Произошла ошибка!';
   errorDescription.textContent = value;
@@ -74,4 +76,6 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {showAlert, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
+const comparePhotos = (photoA, photoB) => photoB - photoA;
+
+export {comparePhotos, showAlert, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
