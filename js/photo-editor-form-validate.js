@@ -1,16 +1,14 @@
-
-import {contains} from './util.js';
-
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_HASHTAGS_AMOUNT = 5;
 const MAX_HASHTAGS_AMOUNT_TEXT = 'Максимальное количество хэштегов - 5';
 const RECURRING_HASHTAGS_ERROR_TEXT = 'Удалите повторяющиеся хэштеги';
 const CORRECT_HASHTAG_ERROR_TEXT = 'Проверьте правильность написания хэштегов';
+const MAX_DESCRIPTION_LENGTH_TEXT = 'Длина комментария не должна превышать 140 символов.';
 
 const uploadForm = document.querySelector('.img-upload__form');
-const userHashtags = document.querySelector('.text__hashtags');
+const userHashtagsInput = document.querySelector('.text__hashtags');
 const description = uploadForm.querySelector('.text__description');
-const submitButton = uploadForm.querySelector('.img-upload__submit');
+//const submitButton = uploadForm.querySelector('.img-upload__submit');
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
 const pristine = new Pristine (uploadForm, {
@@ -21,42 +19,42 @@ const pristine = new Pristine (uploadForm, {
 
 const validateDescription = (value) => {
   if (value.length > MAX_DESCRIPTION_LENGTH) {
-    submitButton.disabled = true;
+    //submitButton.disabled = true;
     return false;
   }
-  submitButton.disabled = false;
+  //submitButton.disabled = false;
   return true;
 };
 
 const checkValue = (value) => {
-  const hashtagsArray = value.split(' ');
-  const dublicateArray = [];
+  const hashtags = value.split(' ');
+  const dublicates = [];
   let error = false;
 
-  if (hashtagsArray[0] === '') {
-    hashtagsArray.splice(0);
+  if (hashtags[0] === '') {
+    hashtags.splice(0);
   }
 
-  if (hashtagsArray.length > MAX_HASHTAGS_AMOUNT) {
-    submitButton.disabled = true;
+  if (hashtags.length > MAX_HASHTAGS_AMOUNT) {
+    //submitButton.disabled = true;
     return {
       isValid: false,
       errorText: MAX_HASHTAGS_AMOUNT_TEXT,
     };
   }
 
-  hashtagsArray.forEach((hashtag) => {
+  hashtags.forEach((hashtag) => {
     if (re.test(hashtag) === false) {
       error = true;
     }
     hashtag.toLowerCase();
-    if (contains(dublicateArray, hashtag) === false) {
-      dublicateArray.push(hashtag);
+    if (dublicates.includes(hashtag) === false) {
+      dublicates.push(hashtag);
     }
   });
 
-  if (hashtagsArray.length !== dublicateArray.length) {
-    submitButton.disabled = true;
+  if (hashtags.length !== dublicates.length) {
+    //submitButton.disabled = true;
     return {
       isValid: false,
       errorText: RECURRING_HASHTAGS_ERROR_TEXT,
@@ -64,14 +62,14 @@ const checkValue = (value) => {
   }
 
   if (error) {
-    submitButton.disabled = true;
+    //submitButton.disabled = true;
     return {
       isValid: false,
       errorText: CORRECT_HASHTAG_ERROR_TEXT,
     };
   }
 
-  submitButton.disabled = false;
+  //submitButton.disabled = false;
 
   return {
     isValid: true,
@@ -92,5 +90,17 @@ const getTextError = (value) => {
   return errorText;
 };
 
-pristine.addValidator(description, validateDescription, 'Длина комментария не должна превышать 140 символов.');
-pristine.addValidator(userHashtags, validateHashtag, getTextError);
+pristine.addValidator(description, validateDescription, MAX_DESCRIPTION_LENGTH_TEXT);
+pristine.addValidator(userHashtagsInput, validateHashtag, getTextError);
+
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    console.log('Можно отправлять');
+  } else {
+    console.log('Форма невалидна');
+  }
+});
+

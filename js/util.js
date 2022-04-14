@@ -53,13 +53,4 @@ const addComment = (userComment) => {
   return newComment;
 };
 
-function contains(arr, elem) {
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === elem) {
-      return true;
-    }
-  }
-  return false;
-}
-
-export {contains, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
+export {addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};

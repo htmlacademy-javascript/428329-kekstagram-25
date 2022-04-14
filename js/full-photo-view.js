@@ -14,6 +14,7 @@ const fullPhotoCommentsCount = document.querySelector('.comments-count');
 const fullPhotoDescription = document.querySelector('.social__caption');
 const fullPhotoCloseButton = document.querySelector('.big-picture__cancel');
 const fullPhotoCommentsList = document.querySelector('.social__comments');
+const fullPhotoCommentsListFragment = document.createDocumentFragment();
 
 let userComments;
 
@@ -29,39 +30,21 @@ const onFullPhotoEscKeydown = (evt) => {
   }
 };
 
-const onButtonClose = () => {
+const onCloseButtonClick = () => {
   if (fullPhotoCloseButton) {
     closeFullPhoto();
   }
 };
 
-const onSocialCommentsLoaderClick = () => {
-  const lastCommentIndex = fullPhotoCommentsList.children.length + MAX_COMMENTS_COUNT;
-  if (socialCommentsLoader) {
-    loadMoreButton(lastCommentIndex, userComments);
-  }
-};
-
-function closeFullPhoto () {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-  socialCommentCount.classList.remove('hidden');
-  socialCommentsLoader.classList.remove('hidden');
-
-  document.removeEventListener('keydown', onFullPhotoEscKeydown);
-  document.removeEventListener('click', onButtonClose);
-  //document.removeEventListener('click', onSocialCommentsLoaderClick);
-  socialCommentsLoader.removeEventListener('click', onSocialCommentsLoaderClick);
-}
-
 const loadComments = (lastIndex, list) => {
   removeAllChildren(fullPhotoCommentsList);
   for (let i = 0; i < lastIndex; i++) {
-    fullPhotoCommentsList.appendChild(addComment(list[i]));
+    fullPhotoCommentsListFragment.appendChild(addComment(list[i]));
   }
+  fullPhotoCommentsList.appendChild(fullPhotoCommentsListFragment);
 };
 
-function loadMoreButton (lastIndex, list) {
+const loadMoreComments = (lastIndex, list) => {
   if (lastIndex >= list.length) {
     commentsCountView.textContent = list.length;
     loadComments(list.length, list);
@@ -70,10 +53,17 @@ function loadMoreButton (lastIndex, list) {
     commentsCountView.textContent = lastIndex;
     loadComments(lastIndex, list);
   }
-}
+};
+
+const onSocialCommentsLoaderClick = () => {
+  const lastCommentIndex = fullPhotoCommentsList.children.length + MAX_COMMENTS_COUNT;
+  if (socialCommentsLoader) {
+    loadMoreComments(lastCommentIndex, userComments);
+  }
+};
 
 const createCommentsList = () => {
-  if (userComments <= MAX_COMMENTS_COUNT) {
+  if (userComments.length <= MAX_COMMENTS_COUNT) {
     commentsCountView.textContent = userComments.length;
     loadComments(userComments.length, userComments);
     socialCommentsLoader.classList.add('hidden');
@@ -109,4 +99,15 @@ const createBigPhoto = (photo) => {
   });
 };
 
-export {openFullPhoto, closeFullPhoto, createBigPhoto};
+function closeFullPhoto () {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+  socialCommentCount.classList.remove('hidden');
+  socialCommentsLoader.classList.remove('hidden');
+
+  document.removeEventListener('keydown', onFullPhotoEscKeydown);
+  document.removeEventListener('click', onCloseButtonClick);
+  socialCommentsLoader.removeEventListener('click', onSocialCommentsLoaderClick);
+}
+
+export {createBigPhoto};

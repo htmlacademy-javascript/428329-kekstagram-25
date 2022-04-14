@@ -1,7 +1,15 @@
+const PhotoEffect = {
+  CHROME: 'chrome',
+  SEPIA: 'sepia',
+  MARVIN: 'marvin',
+  PHOBOS: 'phobos',
+  HEAT: 'heat',
+};
+
 const imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
-const effects = document.querySelectorAll('.effects__radio');
 const filterSlider = document.querySelector('.effect-level__slider');
 const filterValue = document.querySelector('.effect-level__value');
+const effectField = document.querySelector('.img-upload__effect-level');
 
 noUiSlider.create(filterSlider, {
   range: {
@@ -24,32 +32,53 @@ noUiSlider.create(filterSlider, {
 });
 
 filterSlider.classList.add('hidden');
+effectField.classList.add('hidden');
 
 const addFilterStyle = (filterName, value) => {
   let styleFilter;
   switch (filterName) {
-    case 'chrome':
+    case PhotoEffect.CHROME:
       styleFilter = `grayscale(${  value  })`;
       break;
-    case 'sepia':
+    case PhotoEffect.SEPIA:
       styleFilter = `sepia(${  value  })`;
       break;
-    case 'marvin':
+    case PhotoEffect.MARVIN:
       styleFilter = `invert(${  value  }%)`;
       break;
-    case 'phobos':
+    case PhotoEffect.PHOBOS:
       styleFilter = `blur(${  value  }px)`;
       break;
-    case 'heat':
+    case PhotoEffect.HEAT:
       styleFilter = `brightness(${  value  })`;
       break;
+    default:
+      styleFilter = '';
   }
   imgUploadPreview.style.filter = styleFilter;
 };
 
 const setEffect = (effectName) => {
   switch (effectName.value) {
-    case 'chrome':
+    case PhotoEffect.CHROME:
+      effectField.classList.remove('hidden');
+      filterSlider.classList.remove('hidden');
+
+      filterSlider.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 1,
+        },
+        step: 0.1,
+        start: 1,
+      });
+      filterSlider.noUiSlider.on('update', () => {
+        filterValue.value = filterSlider.noUiSlider.get();
+        addFilterStyle(effectName.value, filterValue.value);
+      });
+      break;
+    case PhotoEffect.SEPIA:
+      effectField.classList.remove('hidden');
       filterSlider.classList.remove('hidden');
       filterSlider.noUiSlider.updateOptions({
         range: {
@@ -64,22 +93,8 @@ const setEffect = (effectName) => {
         addFilterStyle(effectName.value, filterValue.value);
       });
       break;
-    case 'sepia':
-      filterSlider.classList.remove('hidden');
-      filterSlider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        step: 0.1,
-        start: 1,
-      });
-      filterSlider.noUiSlider.on('update', () => {
-        filterValue.value = filterSlider.noUiSlider.get();
-        addFilterStyle(effectName.value, filterValue.value);
-      });
-      break;
-    case 'marvin':
+    case PhotoEffect.MARVIN:
+      effectField.classList.remove('hidden');
       filterSlider.classList.remove('hidden');
       filterSlider.noUiSlider.updateOptions({
         range: {
@@ -102,7 +117,8 @@ const setEffect = (effectName) => {
         addFilterStyle(effectName.value, filterValue.value);
       });
       break;
-    case 'phobos':
+    case PhotoEffect.PHOBOS:
+      effectField.classList.remove('hidden');
       filterSlider.classList.remove('hidden');
       filterSlider.noUiSlider.updateOptions({
         range: {
@@ -117,7 +133,8 @@ const setEffect = (effectName) => {
         addFilterStyle(effectName.value, filterValue.value);
       });
       break;
-    case 'heat':
+    case PhotoEffect.HEAT:
+      effectField.classList.remove('hidden');
       filterSlider.classList.remove('hidden');
       filterSlider.noUiSlider.updateOptions({
         range: {
@@ -133,22 +150,21 @@ const setEffect = (effectName) => {
       });
       break;
     default:
+      addFilterStyle();
       filterSlider.classList.add('hidden');
+      effectField.classList.add('hidden');
   }
 };
 
-function changeEffect (effect) {
+const changeEffect = (effect) => {
   const className = `effects__preview--${  effect.value}`;
   imgUploadPreview.removeAttribute('class');
   imgUploadPreview.classList.add(className);
   setEffect(effect);
+};
+
+function onEffectClick () {
+  changeEffect(this);
 }
 
-for (const effect of effects) {
-  const onEffectClick = () => {
-    if (effect) {
-      changeEffect(effect);
-    }
-  };
-  effect.addEventListener('click', onEffectClick);
-}
+export {onEffectClick};
