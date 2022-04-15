@@ -52,8 +52,7 @@ const checkValue = (value) => {
     if (re.test(hashtag) === false) {
       error = true;
     }
-    hashtag.toLowerCase();
-    if (dublicates.includes(hashtag) === false) {
+    if (dublicates.includes(hashtag.toLowerCase()) === false) {
       dublicates.push(hashtag);
     }
   });

@@ -138,7 +138,7 @@ const setEffect = (effectName) => {
       filterSlider.classList.remove('hidden');
       filterSlider.noUiSlider.updateOptions({
         range: {
-          min: 0,
+          min: 1,
           max: 3,
         },
         step: 0.1,
