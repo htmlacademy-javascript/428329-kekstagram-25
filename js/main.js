@@ -3,11 +3,22 @@ import './photo-editor-view.js';
 import './photo-editor-form-validate.js';
 import './photo-scale.js';
 import './photo-effects.js';
+import './filters.js';
 
 import {getData} from './api.js';
 import {createPhotoDescriptions} from './thumbnail.js';
 import {showError} from './util.js';
+import {chooseFilterDefault, chooseFilterRandom, chooseFilterDiscussed} from './filters.js';
 
-getData(createPhotoDescriptions, showError);
+let photos;
+getData(
+  (loadedPhotos) => {
+    createPhotoDescriptions(loadedPhotos);
+    photos = loadedPhotos;
+    chooseFilterDefault(() => createPhotoDescriptions(photos));
+    chooseFilterRandom(() => createPhotoDescriptions(loadedPhotos));
+    chooseFilterDiscussed(() => createPhotoDescriptions(loadedPhotos));
+  },
+  showError);
 
-
+export {photos};

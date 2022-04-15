@@ -29,6 +29,14 @@ const checkCommentLength = (userComment, maxCommentLength) => (userComment.lengt
 
 const getRandomArrayElement = (elements) => elements[getRandomIntegerPositiveNumber(0, elements.length - 1)];
 
+const randomArray = (arr, len) => {
+  const newArray = [];
+  for (let i = 0; i < len; i++) {
+    newArray.push(getRandomArrayElement(arr));
+  }
+  return newArray;
+};
+
 const isEscapeKey = (evt) => evt.key === 'Escape';
 const isEnterKey = (evt) => evt.key === 'Enter';
 
@@ -76,6 +84,14 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const comparePhotos = (photoA, photoB) => photoB - photoA;
+const comparePhotos = (photoA, photoB) => {
+  if (photoA.comments.length > photoB.comments.length) {
+    return -1;
+  }
+  if (photoA.comments.length < photoB.comments.length) {
+    return 1;
+  }
+  return 0;
+};
 
-export {comparePhotos, showAlert, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
+export {randomArray, comparePhotos, showAlert, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
