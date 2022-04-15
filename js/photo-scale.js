@@ -11,6 +11,12 @@ const addTransformStyle = (value) => {
   imgUploadPreview.style.transform = styleTransform;
 };
 
+const makeScaleDefault = () => {
+  scaleControlValue.value = '100%';
+  scaleValue = 100;
+  addTransformStyle(scaleValue);
+};
+
 const makeScaleSmaller = () => {
   if (scaleValue >= 50) {
     scaleValue = scaleValue - 25;
@@ -39,4 +45,4 @@ const onScaleBiggerClick = () => {
   }
 };
 
-export {onScaleSmallerClick, onScaleBiggerClick};
+export {onScaleSmallerClick, onScaleBiggerClick, makeScaleDefault};

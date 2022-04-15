@@ -163,8 +163,14 @@ const changeEffect = (effect) => {
   setEffect(effect);
 };
 
+const makeEffectDefault = () => {
+  imgUploadPreview.removeAttribute('class');
+  imgUploadPreview.classList.add('effects__preview--none');
+  setEffect('original');
+};
+
 function onEffectClick () {
   changeEffect(this);
 }
 
-export {onEffectClick};
+export {onEffectClick, makeEffectDefault};

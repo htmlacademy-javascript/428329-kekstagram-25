@@ -1,6 +1,6 @@
 import {isEscapeKey} from './util.js';
-import {onScaleSmallerClick, onScaleBiggerClick} from './photo-scale.js';
-import {onEffectClick} from './photo-effects.js';
+import {onScaleSmallerClick, onScaleBiggerClick, makeScaleDefault} from './photo-scale.js';
+import {onEffectClick, makeEffectDefault} from './photo-effects.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -11,7 +11,11 @@ const descriptionInput = document.querySelector('.text__description');
 
 const scaleSmallerControl = document.querySelector('.scale__control--smaller');
 const scaleBiggerControl = document.querySelector('.scale__control--bigger');
+//const scaleControlValue = document.querySelector('.scale__control--value');
+//const imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
+
 const effects = document.querySelectorAll('.effects__radio');
+
 
 const onInputBlur = (evt) => {
   if (evt === document.activeElement) {
@@ -62,6 +66,9 @@ function closePhotoEditor () {
     for (const effect of effects) {
       effect.addEventListener('click', onEffectClick);
     }
+
+    makeScaleDefault();
+    makeEffectDefault();
   }
 }
 
