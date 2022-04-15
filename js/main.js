@@ -15,9 +15,9 @@ getData(
   (loadedPhotos) => {
     createPhotoDescriptions(loadedPhotos);
     photos = loadedPhotos;
-    chooseFilterDefault(() => createPhotoDescriptions(photos));
-    chooseFilterRandom(() => createPhotoDescriptions(loadedPhotos));
-    chooseFilterDiscussed(() => createPhotoDescriptions(loadedPhotos));
+    chooseFilterDefault();
+    chooseFilterRandom();
+    chooseFilterDiscussed();
   },
   showError);
 

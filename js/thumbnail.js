@@ -25,7 +25,7 @@ const createPhotoDescriptions = (pictureThumbnails) => {
         createBigPhoto(photo);
       });
     });
-  pictureListThumbnail.innerHTML = '';
+  pictureListFragment.innerHTML = '';
   pictureListThumbnail.appendChild(pictureListFragment);
   imgFilters.classList.remove('img-filters--inactive');
 };

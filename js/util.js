@@ -29,10 +29,13 @@ const checkCommentLength = (userComment, maxCommentLength) => (userComment.lengt
 
 const getRandomArrayElement = (elements) => elements[getRandomIntegerPositiveNumber(0, elements.length - 1)];
 
-const randomArray = (arr, len) => {
+const getRandomArray = (arr, len) => {
   const newArray = [];
   for (let i = 0; i < len; i++) {
-    newArray.push(getRandomArrayElement(arr));
+    const elem = getRandomArrayElement(arr);
+    newArray.push(elem);
+    const indexElem = arr.indexOf(elem);
+    arr.splice(indexElem, 1);
   }
   return newArray;
 };
@@ -94,4 +97,4 @@ const comparePhotos = (photoA, photoB) => {
   return 0;
 };
 
-export {randomArray, comparePhotos, showAlert, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
+export {getRandomArray, comparePhotos, showAlert, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
