@@ -7,6 +7,7 @@ const errorDescription = document.querySelector('.error-message__text');
 const errorWrapper = document.querySelector('.server-error');
 const imgFilters = document.querySelector('.img-filters');
 
+
 const getRandomNaturalNumber = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
