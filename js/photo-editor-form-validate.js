@@ -1,6 +1,6 @@
 
 import {sendData} from './api.js';
-import {showAlert} from './util.js';
+import {viewFailUploadMessage, viewSuccessUploadMessage, createLoadingMessage, hideLoadingMessage} from './util.js';
 import {closePhotoEditor} from './photo-editor-view.js';
 
 const MAX_DESCRIPTION_LENGTH = 140;
@@ -57,7 +57,7 @@ const checkValue = (value) => {
     }
   });
 
-  if (hashtags.length !== dublicates.length) {
+  if (hashtags.length !== dublicates.length ) {
     submitButton.disabled = true;
     return {
       isValid: false,
@@ -102,12 +102,17 @@ uploadForm.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
+    createLoadingMessage();
     sendData(
       () => {
+        hideLoadingMessage();
         closePhotoEditor();
+        viewSuccessUploadMessage();
       },
       () => {
-        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+        hideLoadingMessage();
+        closePhotoEditor();
+        viewFailUploadMessage();
       },
       new FormData(evt.target),
     );

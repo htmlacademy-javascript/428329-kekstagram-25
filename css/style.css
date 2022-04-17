@@ -715,19 +715,17 @@ main {
 
 .img-upload__error {
   position: absolute;
-	top: -48px;
+	top: 35px;
 	left: 0;
 	right: 0;
 
   width: 450px;
 
   margin: auto;
-  padding: 10px;
 
-  color:#232321;
+  color:#dede02;
+  background-color: #232321;
   text-transform: none;
-  background-color: #eed21e;
-  border-radius: 15px;
 };
 
 

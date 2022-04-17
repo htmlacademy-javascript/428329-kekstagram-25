@@ -1,6 +1,6 @@
 const COMMENT_IMG_WIDTH = 35;
 const COMMENT_IMG_HEIGHT = 35;
-const ALERT_SHOW_TIME = 3000;
+//const ALERT_SHOW_TIME = 3000;
 
 const errorCode = document.querySelector('.error-message__title');
 const errorDescription = document.querySelector('.error-message__text');
@@ -78,7 +78,7 @@ const showError = (value) => {
   errorDescription.textContent = value;
 };
 
-const showAlert = (message) => {
+/*const showAlert = (message) => {
   errorWrapper.classList.remove('hidden');
   errorCode.textContent = 'Упс!..';
   errorDescription.textContent = message;
@@ -86,7 +86,7 @@ const showAlert = (message) => {
   setTimeout(() => {
     errorWrapper.classList.add('hidden');
   }, ALERT_SHOW_TIME);
-};
+};*/
 
 const comparePhotos = (photoA, photoB) => {
   if (photoA.comments.length > photoB.comments.length) {
@@ -106,4 +106,38 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {debounce, getRandomArray, comparePhotos, showAlert, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};
+const viewSuccessUploadMessage = () => {
+  const successMessageContainer = document.createElement('div');
+  const successMessageTemplate = document.querySelector('#success');
+
+  successMessageContainer.append(successMessageTemplate.content.cloneNode(true));
+  document.body.append(successMessageContainer);
+
+  const successButton = document.querySelector('.success__button');
+  successButton.addEventListener('click', () => {
+    successMessageContainer.remove();
+  });
+};
+
+const viewFailUploadMessage = () => {
+  const failMessageContainer = document.createElement('div');
+  const failMessageTemplate = document.querySelector('#error');
+
+  failMessageContainer.append(failMessageTemplate.content.cloneNode(true));
+  document.body.append(failMessageContainer);
+};
+
+const createLoadingMessage = () => {
+  const loadingMessageContainer = document.createElement('div');
+  const loadingMessageTemplate = document.querySelector('#messages');
+
+  loadingMessageContainer.append(loadingMessageTemplate.content.cloneNode(true));
+  document.body.append(loadingMessageContainer);
+};
+
+const hideLoadingMessage = () => {
+  const loadingMessage = document.querySelector('.img-upload__message');
+  loadingMessage.remove();
+};
+
+export {hideLoadingMessage, createLoadingMessage, viewSuccessUploadMessage, viewFailUploadMessage, debounce, getRandomArray, comparePhotos, showError, addComment, removeAllChildren, getRandomNaturalNumber, getRandomIntegerPositiveNumber, checkCommentLength, getRandomArrayElement, isEscapeKey, isEnterKey};

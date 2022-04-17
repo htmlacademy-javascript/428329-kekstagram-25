@@ -2,6 +2,7 @@ import {isEscapeKey} from './util.js';
 import {onScaleSmallerClick, onScaleBiggerClick, makeScaleDefault} from './photo-scale.js';
 import {onEffectClick, makeEffectDefault} from './photo-effects.js';
 
+const uploadForm = document.querySelector('.img-upload__form');
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -11,8 +12,6 @@ const descriptionInput = document.querySelector('.text__description');
 
 const scaleSmallerControl = document.querySelector('.scale__control--smaller');
 const scaleBiggerControl = document.querySelector('.scale__control--bigger');
-//const scaleControlValue = document.querySelector('.scale__control--value');
-//const imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
 
 const effects = document.querySelectorAll('.effects__radio');
 
@@ -69,6 +68,7 @@ function closePhotoEditor () {
 
     makeScaleDefault();
     makeEffectDefault();
+    uploadForm.reset();
   }
 }
 
