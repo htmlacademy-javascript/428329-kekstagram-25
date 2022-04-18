@@ -93,7 +93,5 @@ const getTextError = (value) => {
 pristine.addValidator(description, validateDescription, MAX_DESCRIPTION_LENGTH_TEXT);
 pristine.addValidator(userHashtagsInput, validateHashtag, getTextError);
 
-const isFormValid = pristine.validate();
-
-export {isFormValid, pristine};
+export {pristine};
 

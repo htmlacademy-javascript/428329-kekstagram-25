@@ -2,7 +2,7 @@ import {isEscapeKey, checkActiveElement} from './util.js';
 import {viewFailUploadMessage, viewSuccessUploadMessage, createLoadingMessage, hideLoadingMessage} from './upload-messages.js';
 import {onScaleSmallerClick, onScaleBiggerClick, makeScaleDefault} from './photo-scale.js';
 import {onEffectClick, makeEffectDefault} from './photo-effects.js';
-import {isFormValid, pristine} from './photo-editor-form-validate.js';
+import {pristine} from './photo-editor-form-validate.js';
 import {chooseFile} from './photo-loading.js';
 import {sendData} from './api.js';
 
@@ -73,22 +73,20 @@ function closePhotoEditor () {
 
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  if (isFormValid) {
-    createLoadingMessage();
-    sendData(
-      () => {
-        hideLoadingMessage();
-        closePhotoEditor();
-        viewSuccessUploadMessage();
-      },
-      () => {
-        hideLoadingMessage();
-        closePhotoEditor();
-        viewFailUploadMessage();
-      },
-      new FormData(evt.target),
-    );
-  }
+  createLoadingMessage();
+  sendData(
+    () => {
+      hideLoadingMessage();
+      closePhotoEditor();
+      viewSuccessUploadMessage();
+    },
+    () => {
+      hideLoadingMessage();
+      closePhotoEditor();
+      viewFailUploadMessage();
+    },
+    new FormData(evt.target),
+  );
 });
 
 uploadFile.addEventListener('input', openPhotoEditor);
