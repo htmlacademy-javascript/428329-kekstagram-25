@@ -709,26 +709,6 @@ main {
   border-radius: 5px;
 }
 
-.img-upload__text {
-  position: relative;
-}
-
-.img-upload__error {
-  position: absolute;
-	top: 35px;
-	left: 0;
-	right: 0;
-
-  width: 450px;
-
-  margin: auto;
-
-  color:#dede02;
-  background-color: #232321;
-  text-transform: none;
-};
-
-
 /**
  * Кнопка для отправки изображения
  */
@@ -1389,6 +1369,23 @@ main {
   margin-bottom: 0;
 }
 
+.img-upload__text-label {
+  position: relative;
+}
+
+.img-upload__error {
+  position: absolute;
+	top: 25px;
+	left: 0;
+	right: 0;
+
+  width: 450px;
+
+  margin: auto;
+
+  color:#dede02;
+  text-transform: none;
+};
 
 /* Адаптивности чуток
    ========================================================================== */

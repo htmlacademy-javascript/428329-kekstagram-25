@@ -1,20 +1,18 @@
-
-import {sendData} from './api.js';
-import {viewFailUploadMessage, viewSuccessUploadMessage, createLoadingMessage, hideLoadingMessage} from './util.js';
-import {closePhotoEditor} from './photo-editor-view.js';
-
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_HASHTAGS_AMOUNT = 5;
 const MAX_HASHTAGS_AMOUNT_TEXT = 'Максимальное количество хэштегов - 5';
 const RECURRING_HASHTAGS_ERROR_TEXT = 'Удалите повторяющиеся хэштеги';
 const CORRECT_HASHTAG_ERROR_TEXT = 'Проверьте правильность написания хэштегов';
 const MAX_DESCRIPTION_LENGTH_TEXT = 'Длина комментария не должна превышать 140 символов.';
+const REGULAR_EXPRESSION = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
 const uploadForm = document.querySelector('.img-upload__form');
 const userHashtagsInput = document.querySelector('.text__hashtags');
 const description = uploadForm.querySelector('.text__description');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
-const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+
+let isDescriptionValid = true;
+let isHashtagInputValid = true;
 
 const pristine = new Pristine (uploadForm, {
   classTo: 'img-upload__text-label',
@@ -23,12 +21,11 @@ const pristine = new Pristine (uploadForm, {
 });
 
 const validateDescription = (value) => {
-  if (value.length > MAX_DESCRIPTION_LENGTH) {
-    submitButton.disabled = true;
-    return false;
-  }
-  submitButton.disabled = false;
-  return true;
+  isDescriptionValid = value.length <= MAX_DESCRIPTION_LENGTH;
+
+  submitButton.disabled = !(isDescriptionValid && isHashtagInputValid);
+
+  return isDescriptionValid;
 };
 
 const checkValue = (value) => {
@@ -41,7 +38,6 @@ const checkValue = (value) => {
   }
 
   if (hashtags.length > MAX_HASHTAGS_AMOUNT) {
-    submitButton.disabled = true;
     return {
       isValid: false,
       errorText: MAX_HASHTAGS_AMOUNT_TEXT,
@@ -49,7 +45,7 @@ const checkValue = (value) => {
   }
 
   hashtags.forEach((hashtag) => {
-    if (re.test(hashtag) === false) {
+    if (REGULAR_EXPRESSION.test(hashtag) === false) {
       error = true;
     }
     if (dublicates.includes(hashtag.toLowerCase()) === false) {
@@ -58,7 +54,6 @@ const checkValue = (value) => {
   });
 
   if (hashtags.length !== dublicates.length ) {
-    submitButton.disabled = true;
     return {
       isValid: false,
       errorText: RECURRING_HASHTAGS_ERROR_TEXT,
@@ -66,14 +61,11 @@ const checkValue = (value) => {
   }
 
   if (error) {
-    submitButton.disabled = true;
     return {
       isValid: false,
       errorText: CORRECT_HASHTAG_ERROR_TEXT,
     };
   }
-
-  submitButton.disabled = false;
 
   return {
     isValid: true,
@@ -86,7 +78,11 @@ const validateHashtag = (value) => {
     value = value.substring(0, value.length-1);
   }
   const {isValid} = checkValue(value);
-  return isValid;
+  isHashtagInputValid = isValid;
+
+  submitButton.disabled = !(isDescriptionValid && isHashtagInputValid);
+
+  return isHashtagInputValid;
 };
 
 const getTextError = (value) => {
@@ -97,25 +93,7 @@ const getTextError = (value) => {
 pristine.addValidator(description, validateDescription, MAX_DESCRIPTION_LENGTH_TEXT);
 pristine.addValidator(userHashtagsInput, validateHashtag, getTextError);
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const isFormValid = pristine.validate();
 
-  const isValid = pristine.validate();
-  if (isValid) {
-    createLoadingMessage();
-    sendData(
-      () => {
-        hideLoadingMessage();
-        closePhotoEditor();
-        viewSuccessUploadMessage();
-      },
-      () => {
-        hideLoadingMessage();
-        closePhotoEditor();
-        viewFailUploadMessage();
-      },
-      new FormData(evt.target),
-    );
-  }
-});
+export {isFormValid, pristine};
 

@@ -7,25 +7,25 @@ const RERENDER_DELAY = 500;
 const filterDefault = document.querySelector('#filter-default');
 const filterRandom = document.querySelector('#filter-random');
 const filterDiscussed = document.querySelector('#filter-discussed');
-const imgFilters = document.querySelector('.img-filters');
+const imgFilter = document.querySelector('.img-filters');
 
 const showFilters = () => {
-  imgFilters.classList.remove('img-filters--inactive');
-};
-
-const renderPhotos = (array) => {
-  createPhotoDescriptions(array);
+  imgFilter.classList.remove('img-filters--inactive');
 };
 
 const deletePhotos = () => {
-  const ph = document.querySelectorAll('.picture').forEach((e) => e.parentNode.removeChild(e));
-  return ph;
+  const picture = document.querySelectorAll('.picture').forEach((e) => e.parentNode.removeChild(e));
+  return picture;
+};
+
+const renderPhotos = (pictures) => {
+  deletePhotos();
+  createPhotoDescriptions(pictures);
 };
 
 const renderPhotosWithDelay = debounce(renderPhotos, RERENDER_DELAY);
 
-const onfilterDefaultClick = () => {
-  deletePhotos();
+const onFilterDefaultClick = () => {
   filterDefault.classList.add('img-filters__button--active');
   filterRandom.classList.remove('img-filters__button--active');
   filterDiscussed.classList.remove('img-filters__button--active');
@@ -33,18 +33,16 @@ const onfilterDefaultClick = () => {
   renderPhotosWithDelay(photos);
 };
 
-const onfilterRandomClick = () => {
-  deletePhotos();
-  const array = photos.slice();
+const onFilterRandomClick = () => {
+  const slicedPhotos = photos.slice();
   filterDefault.classList.remove('img-filters__button--active');
   filterRandom.classList.add('img-filters__button--active');
   filterDiscussed.classList.remove('img-filters__button--active');
 
-  renderPhotosWithDelay(getRandomArray(array, 10));
+  renderPhotosWithDelay(getRandomArray(slicedPhotos, 10));
 };
 
-const onfilterDiscussedClick = () => {
-  deletePhotos();
+const onFilterDiscussedClick = () => {
   const array = photos.slice();
   filterDefault.classList.remove('img-filters__button--active');
   filterRandom.classList.remove('img-filters__button--active');
@@ -53,8 +51,8 @@ const onfilterDiscussedClick = () => {
   renderPhotosWithDelay(array.sort(comparePhotos));
 };
 
-filterDefault.addEventListener('click', onfilterDefaultClick);
-filterRandom.addEventListener('click', onfilterRandomClick);
-filterDiscussed.addEventListener('click', onfilterDiscussedClick);
+filterDefault.addEventListener('click', onFilterDefaultClick);
+filterRandom.addEventListener('click', onFilterRandomClick);
+filterDiscussed.addEventListener('click', onFilterDiscussedClick);
 
 export {showFilters};

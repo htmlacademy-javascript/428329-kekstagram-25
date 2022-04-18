@@ -8,7 +8,7 @@ const socialCommentCount = document.querySelector('.social__comment-count');
 const socialCommentsLoader = document.querySelector('.comments-loader');
 const commentsCountView = document.querySelector('.comments-count-view');
 
-const fullPhotoImg = document.querySelector('.big-picture__img').querySelector('img');
+const fullPhotoImg = document.querySelector('.big-picture__img img');
 const fullPhotoLikesCount = document.querySelector('.likes-count');
 const fullPhotoCommentsCount = document.querySelector('.comments-count');
 const fullPhotoDescription = document.querySelector('.social__caption');
@@ -30,16 +30,14 @@ const onFullPhotoEscKeydown = (evt) => {
   }
 };
 
-const onCloseButtonClick = () => {
-  if (fullPhotoCloseButton) {
-    closeFullPhoto();
-  }
+const onButtonCloseClick = () => {
+  closeFullPhoto();
 };
 
-const loadComments = (lastIndex, list) => {
+const loadComments = (lastIndex, comments) => {
   removeAllChildren(fullPhotoCommentsList);
   for (let i = 0; i < lastIndex; i++) {
-    fullPhotoCommentsListFragment.appendChild(addComment(list[i]));
+    fullPhotoCommentsListFragment.appendChild(addComment(comments[i]));
   }
   fullPhotoCommentsList.appendChild(fullPhotoCommentsListFragment);
 };
@@ -56,10 +54,9 @@ const loadMoreComments = (lastIndex, list) => {
 };
 
 const onSocialCommentsLoaderClick = () => {
-  const lastCommentIndex = fullPhotoCommentsList.children.length + MAX_COMMENTS_COUNT;
-  if (socialCommentsLoader) {
-    loadMoreComments(lastCommentIndex, userComments);
-  }
+  const lastCommentIndex =
+    fullPhotoCommentsList.children.length + MAX_COMMENTS_COUNT;
+  loadMoreComments(lastCommentIndex, userComments);
 };
 
 const createCommentsList = () => {
@@ -87,16 +84,9 @@ const createBigPhoto = (photo) => {
 
   createCommentsList();
 
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      closeFullPhoto();
-    }
-  });
+  document.addEventListener('keydown', onFullPhotoEscKeydown);
 
-  fullPhotoCloseButton.addEventListener('click', () => {
-    closeFullPhoto();
-  });
+  fullPhotoCloseButton.addEventListener('click', onButtonCloseClick);
 };
 
 function closeFullPhoto () {
@@ -106,7 +96,7 @@ function closeFullPhoto () {
   socialCommentsLoader.classList.remove('hidden');
 
   document.removeEventListener('keydown', onFullPhotoEscKeydown);
-  document.removeEventListener('click', onCloseButtonClick);
+  fullPhotoCloseButton.removeEventListener('click', onButtonCloseClick);
   socialCommentsLoader.removeEventListener('click', onSocialCommentsLoaderClick);
 }
 
