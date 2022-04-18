@@ -45,10 +45,10 @@ const checkValue = (value) => {
   }
 
   hashtags.forEach((hashtag) => {
-    if (REGULAR_EXPRESSION.test(hashtag) === false) {
+    if (!REGULAR_EXPRESSION.test(hashtag)) {
       error = true;
     }
-    if (dublicates.includes(hashtag.toLowerCase()) === false) {
+    if (dublicates.includes(hashtag.toLowerCase())) {
       dublicates.push(hashtag);
     }
   });

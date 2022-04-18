@@ -1,27 +1,31 @@
-const viewSuccessUploadMessage = () => {
-  const successMessageContainer = document.createElement('div');
-  const successMessageTemplate = document.querySelector('#success');
+import {isEscapeKey} from './util.js';
 
-  successMessageContainer.append(successMessageTemplate.content.cloneNode(true));
-  document.body.append(successMessageContainer);
+const viewUploadMessage = (uploadResult) => {
+  const messageContainer = document.createElement('div');
+  const messageTemplate = document.querySelector(`#${uploadResult}`);
 
-  const successButton = document.querySelector('.success__button');
-  successButton.addEventListener('click', () => {
-    successMessageContainer.remove();
+  messageContainer.append(messageTemplate.content.cloneNode(true));
+  document.body.append(messageContainer);
+
+  const closeButton = document.querySelector(`.${uploadResult}__button`);
+
+  closeButton.addEventListener('click', () => messageContainer.remove());
+
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      messageContainer.remove();
+    }
   });
-};
 
-const viewFailUploadMessage = () => {
-  const failMessageContainer = document.createElement('div');
-  const failMessageTemplate = document.querySelector('#error');
-
-  failMessageContainer.append(failMessageTemplate.content.cloneNode(true));
-  document.body.append(failMessageContainer);
-
-  const failButton = document.querySelector('.error__button');
-  failButton.addEventListener('click', () => {
-    failMessageContainer.remove();
+  document.addEventListener('click', (evt) => {
+    if (evt.target.closest(`.${uploadResult}`).length ) {
+      return;
+    }
+    messageContainer.remove();
+    (`.${  uploadResult}`).fadeOut();
   });
+
 };
 
 const createLoadingMessage = () => {
@@ -37,4 +41,4 @@ const hideLoadingMessage = () => {
   loadingMessage.remove();
 };
 
-export {hideLoadingMessage, createLoadingMessage, viewSuccessUploadMessage, viewFailUploadMessage};
+export {hideLoadingMessage, createLoadingMessage, viewUploadMessage};

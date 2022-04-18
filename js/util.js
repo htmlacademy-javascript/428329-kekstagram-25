@@ -2,6 +2,7 @@ const COMMENT_IMG_WIDTH = 35;
 const COMMENT_IMG_HEIGHT = 35;
 const ESCAPE_KEYCODE = 'Escape';
 const ENTER_KEYCODE = 'Enter';
+const ERROR_MESSAGE = 'Произошла ошибка';
 const errorCode = document.querySelector('.error-message__title');
 const errorDescription = document.querySelector('.error-message__text');
 const errorWrapper = document.querySelector('.server-error');
@@ -62,7 +63,7 @@ const addComment = (userComment) => {
 const showError = (value) => {
   imgFilter.classList.add('img-filters--inactive');
   errorWrapper.classList.remove('hidden');
-  errorCode.textContent = 'Произошла ошибка!';
+  errorCode.textContent = ERROR_MESSAGE;
   errorDescription.textContent = value;
 };
 

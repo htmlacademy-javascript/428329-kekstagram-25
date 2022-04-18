@@ -1,5 +1,5 @@
 import {isEscapeKey, checkActiveElement} from './util.js';
-import {viewFailUploadMessage, viewSuccessUploadMessage, createLoadingMessage, hideLoadingMessage} from './upload-messages.js';
+import {viewUploadMessage, createLoadingMessage, hideLoadingMessage} from './upload-messages.js';
 import {onScaleSmallerClick, onScaleBiggerClick, makeScaleDefault} from './photo-scale.js';
 import {onEffectClick, makeEffectDefault} from './photo-effects.js';
 import {pristine} from './photo-editor-form-validate.js';
@@ -78,12 +78,12 @@ uploadForm.addEventListener('submit', (evt) => {
     () => {
       hideLoadingMessage();
       closePhotoEditor();
-      viewSuccessUploadMessage();
+      viewUploadMessage('success');
     },
     () => {
       hideLoadingMessage();
       closePhotoEditor();
-      viewFailUploadMessage();
+      viewUploadMessage('error');
     },
     new FormData(evt.target),
   );

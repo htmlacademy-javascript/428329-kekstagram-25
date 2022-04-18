@@ -1,4 +1,4 @@
-const MAX_SCALE_VALUE = 100;
+const DEFAULT_SCALE_VALUE = 100;
 const MIN_SCALE_VALUE = 25;
 const STEP_SCALE_VALUE = 25;
 
@@ -14,8 +14,8 @@ const addTransformStyle = (value) => {
 };
 
 const makeScaleDefault = () => {
-  scaleControlValue.value = '100%';
-  scaleValue = MAX_SCALE_VALUE;
+  scaleControlValue.value = `${DEFAULT_SCALE_VALUE}%`;
+  scaleValue = DEFAULT_SCALE_VALUE;
   addTransformStyle(scaleValue);
 };
 
@@ -28,7 +28,7 @@ const makeScaleSmaller = () => {
 };
 
 const makeScaleBigger = () => {
-  if (scaleValue <= MAX_SCALE_VALUE - STEP_SCALE_VALUE) {
+  if (scaleValue <= DEFAULT_SCALE_VALUE - STEP_SCALE_VALUE) {
     scaleValue = scaleValue + STEP_SCALE_VALUE;
     scaleControlValue.value = `${scaleValue  }%`;
     addTransformStyle(scaleValue);

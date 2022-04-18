@@ -19,15 +19,13 @@ noUiSlider.create(filterSlider, {
   start: 1,
   step: 0.1,
   format: {
-    to: function (value) {
+    to: (value) => {
       if (Number.isInteger(value)) {
         return value.toFixed(0);
       }
       return value.toFixed(1);
     },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    from: (value) => parseFloat(value),
   },
 });
 
@@ -104,12 +102,8 @@ const setEffect = (effectName) => {
         step: 1,
         start: 100,
         format: {
-          to: function (value) {
-            return value;
-          },
-          from: function (value) {
-            return parseFloat(value);
-          },
+          to: (value) => value,
+          from: (value) => parseFloat(value),
         },
       });
       filterSlider.noUiSlider.on('update', () => {
