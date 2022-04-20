@@ -27,30 +27,9 @@ const viewUploadMessage = (uploadResult) => {
 
   closeButton.addEventListener('click', () => messageContainer.remove());
 
-  /*
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      messageContainer.remove();
-    }
-  });
-
-  document.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains(type)) {
-      messageContainer.remove();
-    }
-  });*/
-
   document.addEventListener('keydown', onKeydownPress);
   document.addEventListener('click', onContainerClick);
 };
-
-function closeMessage () {
-  const uploadMessage = document.querySelector(`.${type}`);
-  document.body.removeChild(uploadMessage);
-  document.removeEventListener('click', onKeydownPress);
-  document.removeEventListener('click', onContainerClick);
-}
 
 const createLoadingMessage = () => {
   const loadingMessageContainer = document.createElement('div');
@@ -64,5 +43,12 @@ const hideLoadingMessage = () => {
   const loadingMessage = document.querySelector('.img-upload__message');
   loadingMessage.remove();
 };
+
+function closeMessage () {
+  const uploadMessage = document.querySelector(`.${type}`);
+  uploadMessage.remove();
+  document.removeEventListener('click', onKeydownPress);
+  document.removeEventListener('click', onContainerClick);
+}
 
 export {hideLoadingMessage, createLoadingMessage, viewUploadMessage};
