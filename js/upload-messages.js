@@ -47,7 +47,7 @@ const hideLoadingMessage = () => {
 function closeMessage () {
   const uploadMessage = document.querySelector(`.${type}`);
   uploadMessage.remove();
-  document.removeEventListener('click', onKeydownPress);
+  document.removeEventListener('keydown', onKeydownPress);
   document.removeEventListener('click', onContainerClick);
 }
 

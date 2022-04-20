@@ -62,6 +62,13 @@ const checkValue = (value) => {
     };
   }
 
+  if (value.length === 0) {
+    return {
+      isValid: true,
+      errorText: '',
+    };
+  }
+
   if (error) {
     return {
       isValid: false,
@@ -76,10 +83,7 @@ const checkValue = (value) => {
 };
 
 const validateHashtag = (value) => {
-  if (value[value.length-1] === ' ') {
-    value = value.substring(0, value.length-1);
-  }
-  const {isValid} = checkValue(value);
+  const {isValid} = checkValue(value.trim());
   isHashtagInputValid = isValid;
 
   submitButton.disabled = !(isDescriptionValid && isHashtagInputValid);
