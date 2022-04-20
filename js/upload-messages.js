@@ -1,31 +1,34 @@
 import {isEscapeKey} from './util.js';
 
+let type;
+
+const onKeydownPress = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeMessage();
+  }
+};
+
+const onContainerClick = (evt) => {
+  if (evt.target.classList.contains(type)) {
+    closeMessage();
+  }
+};
+
 const viewUploadMessage = (uploadResult) => {
+  type = uploadResult;
   const messageContainer = document.createElement('div');
-  const messageTemplate = document.querySelector(`#${uploadResult}`);
+  const messageTemplate = document.querySelector(`#${type}`);
 
   messageContainer.append(messageTemplate.content.cloneNode(true));
   document.body.append(messageContainer);
 
-  const closeButton = document.querySelector(`.${uploadResult}__button`);
+  const closeButton = document.querySelector(`.${type}__button`);
 
   closeButton.addEventListener('click', () => messageContainer.remove());
 
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      messageContainer.remove();
-    }
-  });
-
-  document.addEventListener('click', (evt) => {
-    if (evt.target.closest(`.${uploadResult}`).length ) {
-      return;
-    }
-    messageContainer.remove();
-    (`.${  uploadResult}`).fadeOut();
-  });
-
+  document.addEventListener('keydown', onKeydownPress);
+  document.addEventListener('click', onContainerClick);
 };
 
 const createLoadingMessage = () => {
@@ -40,5 +43,12 @@ const hideLoadingMessage = () => {
   const loadingMessage = document.querySelector('.img-upload__message');
   loadingMessage.remove();
 };
+
+function closeMessage () {
+  const uploadMessage = document.querySelector(`.${type}`);
+  uploadMessage.remove();
+  document.removeEventListener('keydown', onKeydownPress);
+  document.removeEventListener('click', onContainerClick);
+}
 
 export {hideLoadingMessage, createLoadingMessage, viewUploadMessage};

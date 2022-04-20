@@ -33,8 +33,10 @@ const checkValue = (value) => {
   const dublicates = [];
   let error = false;
 
-  if (hashtags[0] === '') {
-    hashtags.splice(0);
+  for (let i = hashtags.length; i > 0; i--) {
+    if (hashtags[i] === '') {
+      hashtags.splice(i,1);
+    }
   }
 
   if (hashtags.length > MAX_HASHTAGS_AMOUNT) {
@@ -48,7 +50,7 @@ const checkValue = (value) => {
     if (!REGULAR_EXPRESSION.test(hashtag)) {
       error = true;
     }
-    if (dublicates.includes(hashtag.toLowerCase())) {
+    if (!dublicates.includes(hashtag.toLowerCase())) {
       dublicates.push(hashtag);
     }
   });
@@ -57,6 +59,13 @@ const checkValue = (value) => {
     return {
       isValid: false,
       errorText: RECURRING_HASHTAGS_ERROR_TEXT,
+    };
+  }
+
+  if (value.length === 0) {
+    return {
+      isValid: true,
+      errorText: '',
     };
   }
 
@@ -74,10 +83,7 @@ const checkValue = (value) => {
 };
 
 const validateHashtag = (value) => {
-  if (value[value.length-1] === ' ') {
-    value = value.substring(0, value.length-1);
-  }
-  const {isValid} = checkValue(value);
+  const {isValid} = checkValue(value.trim());
   isHashtagInputValid = isValid;
 
   submitButton.disabled = !(isDescriptionValid && isHashtagInputValid);
@@ -94,4 +100,3 @@ pristine.addValidator(description, validateDescription, MAX_DESCRIPTION_LENGTH_T
 pristine.addValidator(userHashtagsInput, validateHashtag, getTextError);
 
 export {pristine};
-
